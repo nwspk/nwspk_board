@@ -87,3 +87,39 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+*.pyc
+*.sqlite3
+config.py
+creds.py
+setup.py
+configlocal.py
+scape_code.py
+.settings/
+.project
+.pydevproject
+_build/
+make.bat
+dist/
+MANIFEST
+#################
+## Eclipse
+#################
+
+*.pydevproject
+.project
+.metadata
+.gradle
+bin/
+tmp/
+target/
+output/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+
+

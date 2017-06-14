@@ -1,0 +1,33 @@
+
+raspi-config - change name
+sudo apt-get install samba
+sudo apt-get install xautomation
+sudo apt-get install wmctrl
+
+sudo apt-get install unclutter
+unclutter -display :0 -noevents -grab
+
+sudo nano /etc/X11/xinit/xserverrc
+exec /usr/bin/X -nolisten -nocursor tcp "$@"
+
+sudo apt-get install pip
+pip install -r requirements.txt
+
+crontab -e
+0 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+5 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+10 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+15 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+20 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+25 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+30 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+35 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+40 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+45 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+50 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+55 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
+
+nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+add
+@sh /home/pi/nwspk_board/_source/boot.sh
