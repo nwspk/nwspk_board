@@ -29,3 +29,5 @@ All logic code stored in screen.py
 If python and fabric are installed, code can be deployed to the machines using 'fab uploadcore' if changing code or 'fab upload' if changing additional files. 
 
 To target a specific machine you can do 'fab target:rpi-lounge uploadcore'.
+
+'fab restart' will restart all machines, similarly can be targeted. 
