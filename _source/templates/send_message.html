@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Send Message</title>
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <h1>Send Message to Board!</h1>
+
+        <form action="" method="post" class="form-inline">
+		  <div class="form-group">
+    <label for="Title">Title:</label>
+ <input class="form-control" id="title" name="title" type="text" value="">
+    <label >Content (optional):</label>
+            <input class="form-control" id="text" name="text" type="text" value="">
+			    <label >Duration (seconds):</label>
+			<input class="form-control" id="length" name="length" type="text" value="10">
+	
+	     <label >Optional:</label>
+			<select class="form-control" id="limit" name="limit"><option value="all">all</option><option value="rpi-kitchen">rpi-kitchen</option><option value="rpi-lounge">rpi-lounge</option><option value="rpi-drawing">rpi-drawing</option><option value="rpi-pantry-1">rpi-pantry-1</option><option value="rpi-pantry-2">rpi-pantry-2</option></select>
+			
+			
+            {{ form.csrf_token }}
+			<br>
+			<input class="form-control btn-primary" type="submit" value="Send">
+				 </div>	
+        </form>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

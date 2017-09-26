@@ -47,6 +47,7 @@ def upload():
 	
 def uploadcore():
 	put(r'_source\screen.py', '/home/pi/nwspk_board/_source/screen.py',use_sudo=True)
+	put(r'_source\boot.sh', '/home/pi/nwspk_board/_source/boot.sh',use_sudo=True)
 	put(r'_source\screen.sh', '/home/pi/nwspk_board/_source/screen.sh',use_sudo=True)
 	put(r'_source\screen-hard.sh', '/home/pi/nwspk_board/_source/screen-hard.sh',use_sudo=True)
 	put(r'_source\templates\index.html', '/home/pi/nwspk_board/_source/templates/index.html',use_sudo=True)

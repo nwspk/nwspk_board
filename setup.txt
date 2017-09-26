@@ -4,16 +4,22 @@ sudo apt-get install samba
 sudo apt-get install xautomation
 sudo apt-get install wmctrl
 
+
+#remove mouse
 sudo apt-get install unclutter
 unclutter -display :0 -noevents -grab
 
 sudo nano /etc/X11/xinit/xserverrc
 exec /usr/bin/X -nolisten -nocursor tcp "$@"
 
+#set up packages
 sudo apt-get install pip
 pip install -r requirements.txt
 
+#populate crontab
 crontab -e
+
+#add
 0 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
 5 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
 10 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
@@ -27,6 +33,12 @@ crontab -e
 50 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
 55 * * * * nohup bash /home/pi/nwspk_board/_source/screen.sh
 
+#add daily restart
+
+sudo crontab -e
+10 0 * * * reboot
+
+#start server on startup on master server
 nano /etc/xdg/lxsession/LXDE-pi/autostart
 
 add

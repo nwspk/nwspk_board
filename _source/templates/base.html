@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Newspeak Board</title>
+
+		<link rel="stylesheet" href="/static/css/reveal.css">
+		<link rel="stylesheet" href="/static/css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="/static/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '/static/css/print/pdf.css' : '/static/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+
+			{% block sections %}
+				{% endblock %}
+				<hiddensection id="flash_section">
+				
+						<h2 id="flash_header"></h2>
+						<h3 id= "flash_message"></h3>	
+				
+				</hiddensection>
+				
+			</div>
+		</div>
+
+		
+		<div class="share-reveal" style="position: absolute; bottom: 16px; left: 90%; margin-left: -139px; z-index: 20;">
+			<h2 style="color:white;text-align:right">#nwspk</h2>
+		</div>
+		<script src="/static/lib/js/head.min.js"></script>
+		<script src="/static/js/reveal.js"></script>
+		<script src="/static/js/jquery-3.2.1.min.js"></script>		
+		
+
+		<script>
+		{% block revealinit %}
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+				loop: true,
+				controls: false,
+				transitionSpeed: 'slow',
+				transition: 'fade',
+				progress: false,
+				center: false,
+				width: 1024,
+				height: 768,
+				autoSlide: 30000,
+				shuffle: false,
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '/static/plugin/markdown/marked.js' },
+					{ src: '/static/plugin/markdown/markdown.js' },
+					{ src: '/static/plugin/notes/notes.js', async: true },
+					{ src: '/static/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		{% endblock %}
+		displayed_ids = []
+		
+		timer_id = 0
+		function timer(){
+			location.reload();
+		}
+		
+		function startTimer(){
+			timer_id = setInterval(timer,300000)
+		}
+		
+		function stopTimer(){
+			clearInterval(timer_id)
+		}
+
+		
+		function getFlashMessage (){
+			count = 0
+			$.getJSON( "/flash/?host={{host}}", function( data ) {
+				if ($.isEmptyObject(data) == false){
+					if (data.length == 0) {
+						setTimeout(getFlashMessage, 2000);
+					}
+					for (var i = 0; i < data.length; i++) {
+					d = data[i]
+					if ( $.inArray(d["id"], displayed_ids) > -1 ) {
+						continue
+					} else {
+						displayed_ids.push(d["id"])
+						count += 1
+					}
+					
+
+					$("#flash_header").text(d["title"])
+					$("#flash_message").text(d["body"])
+					Reveal.toggleAutoSlide(false)
+					$("#flash_section").replaceWith('<section id="flash_section">' + $("#flash_section").html() + '</section>');
+					Reveal.sync()
+					if (d["body"] == "") {
+						$("#flash_section").removeClass("center").addClass("center")
+					} else {
+						$("#flash_section").removeClass("center")
+					}
+					
+					state = Reveal.getState()
+					Reveal.slide(Reveal.getTotalSlides() -1)
+					stopTimer()
+					setTimeout(
+					  function() 
+					  {
+						$("#flash_header").text("")
+						$("#flash_message").text("")	  
+						$("#flash_section").replaceWith('<hiddensection id="flash_section">' + $("#flash_section").html()  + '</hiddensection>');
+						Reveal.sync()
+						Reveal.setState(state)
+						Reveal.toggleAutoSlide(true)
+						startTimer()
+						setTimeout(getFlashMessage, 2000);
+					  }, d["length"]);
+			    }
+				if (count == 0){
+					setTimeout(getFlashMessage, 2000);
+				}
+				} else {
+				setTimeout(getFlashMessage, 2000);
+				}
+			}).fail(function() {
+				setTimeout(getFlashMessage, 2000);
+  });
+			
+		}
+		
+		
+
+		
+
+		startTimer()
+		setTimeout(getFlashMessage, 2000);
+	
+		</script>
+		
+		
+	</body>
+</html>
